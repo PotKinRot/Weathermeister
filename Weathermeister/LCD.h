@@ -37,7 +37,7 @@ void Initialize_LCD()
 	_delay_ms(15);
 	Send_Command(0x01);			// clear the screen
 	_delay_ms(2);
-	Send_Command(0x38);			// set for 8-bit mode // 0x20 for 4-bit?
+	Send_Command(0x20);			// (0x38) set for 8-bit mode // 0x20 for 4-bit?
 	_delay_us(50);
 	Send_Command(0b00001100);	// screen: display on, cursor off, blink off
 	_delay_us(50);
