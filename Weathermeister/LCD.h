@@ -98,7 +98,9 @@ void Send_String(char *stringOfCharacters)
 {
 	while(*stringOfCharacters>0)
 	{
+		
 	Send_Character(*stringOfCharacters++);
+	_delay_us(30);
 	}
 }
 
@@ -126,6 +128,7 @@ void Send_Double(double var, uint8_t width, uint8_t precision)
 void GotoLCD_Location(uint8_t x, uint8_t y)
 {
 	Send_Command(0x80 + firstColumnPos[y-1] + (x-1));
+	_delay_us(30);
 }
 
 //***************************************************************************************************
