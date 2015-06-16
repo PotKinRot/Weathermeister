@@ -96,32 +96,15 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DS1307new.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="i2cfncs.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="I2C_master.c">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="I2C_master.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="LCD.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="memory.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="Weathermeister.c">
       <SubType>compile</SubType>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="DS1307new.cpp">
-      <SubType>compile</SubType>
-    </None>
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>
