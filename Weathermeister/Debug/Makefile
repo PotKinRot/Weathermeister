@@ -38,6 +38,7 @@ SUBDIRS :=
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
 ../bmp085.c \
+../ds1307.c \
 ../twimaster.c \
 ../Weathermeister.c
 
@@ -50,21 +51,25 @@ ASM_SRCS +=
 
 OBJS +=  \
 bmp085.o \
+ds1307.o \
 twimaster.o \
 Weathermeister.o
 
 OBJS_AS_ARGS +=  \
 bmp085.o \
+ds1307.o \
 twimaster.o \
 Weathermeister.o
 
 C_DEPS +=  \
 bmp085.d \
+ds1307.d \
 twimaster.d \
 Weathermeister.d
 
 C_DEPS_AS_ARGS +=  \
 bmp085.d \
+ds1307.d \
 twimaster.d \
 Weathermeister.d
 
@@ -82,6 +87,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

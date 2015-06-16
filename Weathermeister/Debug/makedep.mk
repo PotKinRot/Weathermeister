@@ -4,6 +4,8 @@
 
 bmp085.c
 
+ds1307.c
+
 twimaster.c
 
 Weathermeister.c

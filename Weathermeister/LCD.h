@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 
-#define F_CPU 1600000UL	// change this with respect to microcontroller clock speed.
+#define F_CPU 16000000UL	// change this with respect to microcontroller clock speed.
 
 #include <util/delay.h>
 

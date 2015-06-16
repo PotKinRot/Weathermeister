@@ -116,6 +116,12 @@
     <Compile Include="bmp085.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="ds1307.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ds1307.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="i2cmaster.h">
       <SubType>compile</SubType>
     </Compile>
