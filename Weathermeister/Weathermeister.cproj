@@ -20,12 +20,12 @@
     <OverrideVtor>false</OverrideVtor>
     <CacheFlash>true</CacheFlash>
     <ProgFlashFromRam>true</ProgFlashFromRam>
-    <RamSnippetAddress />
+    <RamSnippetAddress>0x20000000</RamSnippetAddress>
     <UncachedRange />
     <preserveEEPROM>true</preserveEEPROM>
-    <OverrideVtorValue />
+    <OverrideVtorValue>exception_table</OverrideVtorValue>
     <BootSegment>2</BootSegment>
-    <eraseonlaunchrule>1</eraseonlaunchrule>
+    <eraseonlaunchrule>0</eraseonlaunchrule>
     <AsfFrameworkConfig>
       <framework-data xmlns="">
         <options />
@@ -38,6 +38,20 @@
         </dependencies>
       </framework-data>
     </AsfFrameworkConfig>
+    <avrtool>com.atmel.avrdbg.tool.stk500</avrtool>
+    <com_atmel_avrdbg_tool_stk500>
+      <ToolOptions>
+        <InterfaceProperties>
+          <IspClock>125000</IspClock>
+        </InterfaceProperties>
+        <InterfaceName>ISP</InterfaceName>
+      </ToolOptions>
+      <ToolType>com.atmel.avrdbg.tool.stk500</ToolType>
+      <ToolNumber>
+      </ToolNumber>
+      <ToolName>STK500</ToolName>
+    </com_atmel_avrdbg_tool_stk500>
+    <avrtoolinterface>ISP</avrtoolinterface>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -96,32 +110,24 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DS1307new.h">
+    <Compile Include="bmp085.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="i2cfncs.h">
+    <Compile Include="bmp085.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="I2C_master.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="I2C_master.h">
+    <Compile Include="i2cmaster.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="LCD.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="memory.h">
+    <Compile Include="twimaster.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Weathermeister.c">
       <SubType>compile</SubType>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="DS1307new.cpp">
-      <SubType>compile</SubType>
-    </None>
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>
