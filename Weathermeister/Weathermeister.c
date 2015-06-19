@@ -5,7 +5,7 @@
  *  Author: Tilmann
  */ 
 
-# define F_CPU 16000000UL
+#define F_CPU 16000000UL
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,8 +13,7 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 #include <math.h>
-#include "bmp085.h"
-#include "ds1307.h"
+#include "I2Cfncs.h"
 #include "LCD.h"
 
 int main(void) {
