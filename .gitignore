@@ -20,6 +20,15 @@ $RECYCLE.BIN/
 # Atmel Studio solution options
 *.atsuo
 
+# Compiled files
+*.hex
+*.o
+*.d
+*.mk
+*.elf
+*.lss
+*.map
+
 # =========================
 # Operating System Files
 # =========================
