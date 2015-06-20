@@ -35,12 +35,10 @@ void ProxyDetect()
 
 ISR(INT0_vect)
 {
-	if (my_state == SLEEP)
+	if (my_state == SLEEP)		//error prevention - this must only trigger when we are sleeping
 	{
-		_delay_us(500);
-		if (PIND & (1<<PIND3))
-		{
-			my_state == disp_temp;
-		}
+		_delay_us(500);			//wait 500µs - time for the signal to travel ~10cm and back
+		if ( !(PIND & (1<<PIND3)) )	//if signal is gone by now, an object is present
+			my_state == DISP_TEMP;	//change state
 }
 
