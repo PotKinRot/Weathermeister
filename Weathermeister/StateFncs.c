@@ -16,6 +16,11 @@
 #include "Proximity.h"
 
 uint8_t time[6];
+volatile int bu;
+volatile int bd;
+volatile int bs;
+volatile int bf;
+int cnt = 0;
 
 
 state do_WELCOME()
@@ -36,37 +41,212 @@ state do_DISP_TEMP()
 {
 		ds1307_getdate(&time[0], &time[1], &time[2], &time[3], &time[4], &time[5]);
 		GotoLCD_Location(1,1);
-		Send_String("Time:");
+		if (time[3]<=9)
+		{
+			Send_String("0");
+			Send_Int(time[3]);
+		}
+		else
+		{
+			Send_Int(time[3]);
+		}
+		Send_String(":");
+		if (time[4]<=9)
+		{
+			Send_String("0");
+			Send_Int(time[4]);
+		}
+		else
+		{
+			Send_Int(time[4]);
+		}
+		Send_String("  ");
+		
+		
 		Send_Int(time[0]);
-		Send_String(" ");
+		Send_String(".");
 		Send_Int(time[1]);
-		Send_String(" ");
+		Send_String(".");
 		Send_Int(time[2]);
+		
 		GotoLCD_Location(1,2);
-		Send_Int(time[3]);
-		Send_String(" ");
-		Send_Int(time[4]);
-		Send_String(" ");
-		Send_Int(time[5]);
-		Send_String(" ");
-	//	Send_Int(l);
-	
-	
-	return DISP_TEMP;}
+		Send_String("Temperature:");
+		
+
+		if (bu==0 && bd == 0)
+		{
+			return DISP_TEMP;	
+		}
+		if (bd==1)
+		{
+			clear_display();
+			bd=0;
+			return DISP_HUM;
+		}
+		if (bu==1)
+		{
+			clear_display();
+			bu=0;
+			return DISP_LIGHT;
+		}
+		}
 	
 state do_DISP_PRESS()
 {
-	return DISP_PRESS;
+	
+		GotoLCD_Location(1,1);
+		if (time[3]<=9)
+		{
+			Send_String("0");
+			Send_Int(time[3]);
+		}
+		else
+		{
+			Send_Int(time[3]);
+		}
+		Send_String(":");
+		if (time[4]<=9)
+		{
+			Send_String("0");
+			Send_Int(time[4]);
+		}
+		else
+		{
+			Send_Int(time[4]);
+		}
+		Send_String("  ");
+		
+		
+		Send_Int(time[0]);
+		Send_String(".");
+		Send_Int(time[1]);
+		Send_String(".");
+		Send_Int(time[2]);
+		
+		GotoLCD_Location(1,2);
+		Send_String("Pressure:");	
+		
+		if (bu==0 && bd == 0)
+		{
+			return DISP_PRESS;
+		}
+		if (bu==1)
+		{
+			clear_display();
+			bu=0;
+			return DISP_HUM;
+		}
+		if (bd==1)
+		{
+			clear_display();
+			bd=0;
+			return DISP_LIGHT;
+		}		
+
 }
 	
 state do_DISP_HUM()
 {
-	return DISP_HUM;
+			GotoLCD_Location(1,1);
+		if (time[3]<=9)
+		{
+			Send_String("0");
+			Send_Int(time[3]);
+		}
+		else
+		{
+			Send_Int(time[3]);
+		}
+		Send_String(":");
+		if (time[4]<=9)
+		{
+			Send_String("0");
+			Send_Int(time[4]);
+		}
+		else
+		{
+			Send_Int(time[4]);
+		}
+		Send_String("  ");
+		
+		
+		Send_Int(time[0]);
+		Send_String(".");
+		Send_Int(time[1]);
+		Send_String(".");
+		Send_Int(time[2]);
+		
+		GotoLCD_Location(1,2);
+		Send_String("Humidity:");	
+		
+		if (bu==0 && bd == 0)
+		{
+			return DISP_HUM;
+		}
+		if (bu==1)
+		{
+			clear_display();
+			bu=0;
+			return DISP_TEMP;
+		}
+		if (bd==1)
+		{
+			clear_display();
+			bd=0;
+			return DISP_PRESS;
+		}		
 }
 	
 state do_DISP_LIGHT()
 {
-	return DISP_LIGHT;
+			GotoLCD_Location(1,1);
+		if (time[3]<=9)
+		{
+			Send_String("0");
+			Send_Int(time[3]);
+		}
+		else
+		{
+			Send_Int(time[3]);
+		}
+		Send_String(":");
+		if (time[4]<=9)
+		{
+			Send_String("0");
+			Send_Int(time[4]);
+		}
+		else
+		{
+			Send_Int(time[4]);
+		}
+		Send_String("  ");
+		
+		
+		Send_Int(time[0]);
+		Send_String(".");
+		Send_Int(time[1]);
+		Send_String(".");
+		Send_Int(time[2]);
+		
+		GotoLCD_Location(1,2);
+		Send_String("Light:");	
+		
+		if (bu==0 && bd == 0)
+		{
+			return DISP_LIGHT;
+		}
+		if (bu==1)
+		{
+			clear_display();
+			bu=0;
+			return DISP_PRESS;
+		}
+		if (bd==1)
+		{
+			bd=0;
+			clear_display();
+			return DISP_TEMP;
+		}	
 }
 	
 void do_SLEEP()
@@ -109,4 +289,24 @@ state do_DISP_SETUP_MSG()
 {
 	return DISP_SETUP_MSG;
 }
+
+
+void Debounce()
+{
+	cnt++;
+	if (cnt==5)
+	{
+	if ( PINC & (1<<PINC7) ) {bu = 0;}
+	else {bu=1;}
+	if ( PINC & (1<<PINC6) ) {bd = 0;}
+	else {bd=1;}
+	if ( PINC & (1<<PINC5) ) {bs = 0;}
+	else {bs=1;}
+	if ( PINC & (1<<PINC4) ) {bf = 0;}
+	else {bf=1;}
+		cnt=0;
+	}
+}
+
+	
 	

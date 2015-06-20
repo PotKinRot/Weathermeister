@@ -22,6 +22,8 @@
 volatile state my_state = WELCOME;	//Declare state variable (volatile, since interrupts may change it)
 
 
+
+
 int main(void) {
 	//int l;
 	//	l = Get_Hum();
@@ -30,6 +32,8 @@ int main(void) {
 	
 	while(1)
 	{
+	  
+		  
 		switch (my_state)
 		{
 			case WELCOME:                         //welcome msg
@@ -122,4 +126,14 @@ ISR(INT0_vect)	//needs to be in this file b/c it needs access to my_state global
 		if ( !(PIND & (1<<PIND3)) )	//if signal is gone by now, an object is present
 		my_state == DISP_TEMP;	//change state
 	}
+}
+
+ISR (TIMER0_OVF_vect)
+{
+  /* Interrupt Aktion alle
+  (8000000/1024)/256 Hz = 30,51 Hz
+  bzw.
+  1/488,28125 s = 32,768 ms  
+  */
+  	Debounce();
 }
