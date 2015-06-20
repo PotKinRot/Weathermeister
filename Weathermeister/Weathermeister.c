@@ -16,92 +16,78 @@
 #include "I2Cfncs.h"
 #include "LCD.h"
 #include "Lighttemphum.h"
+#include "StateFncs.h"
 
-typedef enum {	//Define state machine states
-	WELCOME,
-	DISP_TEMP,
-	DISP_PRESS,
-	DISP_HUM,
-	DISP_LIGHT,
-	SLEEP,
-	DISP_FC,
-	SET_HOUR,
-	SET_MIN,
-	SET_DAY,
-	SET_MONTH,
-	SET_YEAR,
-	DISP_SETUP_MSG
-	} state;
+
 	
 volatile state my_state = WELCOME;	//Declare state variable (volatile, since interrupts may change it)
 
 
 int main(void) {
 	int l;
-	uint8_t time[6];
 	bmp085_init();
 	ds1307_init();
 	Initialize_LCD();
-	l = Get_Hum();
+//	l = Get_Hum();
 	
 	while(1)
 	{
 		switch (my_state)
 		{
 			case WELCOME:                         //welcome msg
-				//my_state = do_welcome();
+				my_state = do_WELCOME();
 				break;
 			
 			case DISP_TEMP:
-
+				my_state = do_DISP_TEMP();
 				break;
 			
 			case DISP_PRESS:
-				//my_state = DISPTP();                    
+				my_state = do_DISP_PRESS();                   
 				break;
 			
 			case DISP_HUM:                           
-				//my_state = DISPTH();
+				my_state = do_DISP_HUM();
 				break;
 			
 			case DISP_LIGHT:
-				//my_state = DISPTL();
+				my_state = do_DISP_LIGHT();
 				break;
 			
 			case SLEEP:
-				//my_state = SLEEP();                 //Sleep mode
+				my_state = do_SLEEP();             //Sleep mode
 				break;
 			
 			case DISP_FC:
-				//my_state = DISPFC();                   //Forecast mode
+				my_state = do_DISP_FC();                   //Forecast mode
 				break;
 			
 			case SET_HOUR:                             //set hours
-				//my_state = SETH();
+				my_state = do_SET_HOUR();
 				break;
 			
 			case SET_MIN:                             //set minutes
-				//my_state = SETMI();
+				my_state = do_SET_MIN();
 				break;
 			
 			case SET_DAY:                             //set day
-				//my_state = SETD();
+				my_state = do_SET_DAY();
 				break;
 			
 			case SET_MONTH:                            //set month
-				//my_state = SETMO();
+				my_state = do_SET_MONTH();
 				break;
 			
 			case SET_YEAR:                              //set year
-				//my_state = SETY();
+				my_state = do_SET_YEAR();
 				break;
 			
 			case DISP_SETUP_MSG:                       // Display "Time and Date Set"
-				//my_state = DISPMSG();
+				my_state = do_DISP_SETUP_MSG();
 				break;
 			
 			default:
-			
+				my_state = DISP_TEMP;
 				break;
 			
 		}

@@ -30,6 +30,7 @@ void Send_String(char *stringOfCharacters);
 void Send_Int(uint16_t var);
 void Send_Double(double var, uint8_t width, uint8_t precision);
 void GotoLCD_Location(uint8_t x, uint8_t y);
+void clear_display();
 
 
 //***************************************************************************************************
@@ -136,4 +137,11 @@ void GotoLCD_Location(uint8_t x, uint8_t y)
 
 //***************************************************************************************************
 
+void clear_display()
+	{
+		GotoLCD_Location(1,1);
+		Send_String("                 ");
+		GotoLCD_Location(1,2);
+		Send_String("                 ");
+	}
 #endif

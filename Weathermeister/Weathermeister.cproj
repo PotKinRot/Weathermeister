@@ -131,6 +131,12 @@
     <Compile Include="Proximity.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="StateFncs.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="StateFncs.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Weathermeister.c">
       <SubType>compile</SubType>
     </Compile>
