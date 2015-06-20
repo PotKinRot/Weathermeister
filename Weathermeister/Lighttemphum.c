@@ -3,6 +3,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
+#include "I2Cfncs.h"
 #include "Lighttemphum.h"
 
 int Get_Hum(void)

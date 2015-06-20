@@ -8,6 +8,7 @@
 #include "Proximity.h"
 #include <avr/interrupt.h>
 #include <avr/io.h>
+#include "I2Cfncs.h"
 
 
 #ifndef TIMER0_OVF_vect
@@ -16,14 +17,14 @@
 void Setup()
 {
 	Setup_Schewi();
-	ProxySetup();
+	//ProxySetup();
 	Setup_Timer();
 	Setup_Buttoninput();
 }
 
 void Setup_Schewi()
 {
-	bmp085_init();
+
 	ds1307_init();
 	Initialize_LCD();
 }

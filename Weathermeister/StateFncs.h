@@ -24,6 +24,9 @@ typedef enum {	//Define state machine states
 	DISP_SETUP_MSG
 } state;
 
+typedef struct  
+{double temp; int pres;int hum;int lux;
+} weather1;
 
 
 extern state do_WELCOME();

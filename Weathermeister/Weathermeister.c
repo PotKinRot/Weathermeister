@@ -29,10 +29,9 @@ int main(void) {
 	//	l = Get_Hum();
 	
 	Setup();
-	
 	while(1)
 	{
-	  
+	  	Get_Weather_Data();
 		  
 		switch (my_state)
 		{
@@ -96,28 +95,12 @@ int main(void) {
 		
 		
 		
-		/*ds1307_getdate(&time[0], &time[1], &time[2], &time[3], &time[4], &time[5]);
-		GotoLCD_Location(1,1);
-		Send_String("Time:");
-		Send_Int(time[0]);
-		Send_String(" ");
-		Send_Int(time[1]);
-		Send_String(" ");
-		Send_Int(time[2]);
-		GotoLCD_Location(1,2);
-		Send_Int(time[3]);
-		Send_String(" ");
-		Send_Int(time[4]);
-		Send_String(" ");
-		Send_Int(time[5]);
-		Send_String(" ");
-		Send_Int(l); */
-		
 	}
 	
 	return 0;
 }
 
+/*
 ISR(INT0_vect)	//needs to be in this file b/c it needs access to my_state global var!
 {
 	if (my_state == SLEEP)		//error prevention - this must only trigger when we are sleeping
@@ -127,7 +110,7 @@ ISR(INT0_vect)	//needs to be in this file b/c it needs access to my_state global
 		my_state == DISP_TEMP;	//change state
 	}
 }
-
+*/
 ISR (TIMER0_OVF_vect)
 {
   /* Interrupt Aktion alle
@@ -136,5 +119,5 @@ ISR (TIMER0_OVF_vect)
   1/488,28125 s = 32,768 ms  
   */
   	Debounce();
-	Get_Weather_Data();
+
 }

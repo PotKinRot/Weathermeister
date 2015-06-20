@@ -14,18 +14,16 @@
 #include <util/delay.h>
 #include <math.h>
 #include "Proximity.h"
+#include "I2Cfncs.h"
 
 uint8_t time[6];
+uint8_t timeset[6];
 volatile int bu;
 volatile int bd;
 volatile int bs;
 volatile int bf;
-double temperature;
-volatile int pressure;
-volatile int humidity;
-volatile int light;
-
 int cnt = 0;
+volatile weather1 weather;
 
 
 state do_WELCOME()
@@ -44,6 +42,7 @@ state do_WELCOME()
 
 state do_DISP_TEMP()
 {
+	
 		GotoLCD_Location(1,1);
 		if (time[3]<=9)
 		{
@@ -75,7 +74,7 @@ state do_DISP_TEMP()
 		
 		GotoLCD_Location(1,2);
 		Send_String("Temp.:");
-		Send_Double(temperature,2,2);
+		Send_Double(weather.temp,2,1);
 		Send_String("C");
 		
 
@@ -131,7 +130,7 @@ state do_DISP_PRESS()
 		
 		GotoLCD_Location(1,2);
 		Send_String("Pressure:");	
-		Send_Int(pressure);
+		Send_Int(weather.pres);
 		Send_String("bar");	
 		if (bu==0 && bd == 0)
 		{
@@ -185,7 +184,7 @@ state do_DISP_HUM()
 		
 		GotoLCD_Location(1,2);
 		Send_String("Humidity:");	
-		Send_Int(humidity);
+		Send_Int(weather.hum);
 		Send_String("%");	
 		if (bu==0 && bd == 0)
 		{
@@ -238,7 +237,7 @@ state do_DISP_LIGHT()
 		
 		GotoLCD_Location(1,2);
 		Send_String("Light:");	
-		Send_Int(light);
+		Send_Int(weather.lux);
 		if (bu==0 && bd == 0)
 		{
 			return DISP_LIGHT;
@@ -270,6 +269,7 @@ state do_DISP_FC()
 	
 state do_SET_HOUR()
 {
+//	timeset = time;
 	return SET_HOUR;
 }
 	
@@ -320,9 +320,9 @@ void Debounce()
 void Get_Weather_Data()
 {
 	ds1307_getdate(&time[0], &time[1], &time[2], &time[3], &time[4], &time[5]);
-	temperature = bmp085_gettemperature();
-	pressure = bmp085_getpressure();
-	humidity = Get_Hum();
+	weather.temp = bmp085_gettemperature();
+	weather.pres = bmp085_getpressure();
+	weather.hum = Get_Hum();
 	
 }
 
