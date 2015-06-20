@@ -13,6 +13,7 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 #include <math.h>
+#include "Proximity.h"
 
 uint8_t time[6];
 
@@ -54,35 +55,58 @@ state do_DISP_TEMP()
 	return DISP_TEMP;}
 	
 state do_DISP_PRESS()
-{}
+{
+	return DISP_PRESS;
+}
 	
 state do_DISP_HUM()
-{}
+{
+	return DISP_HUM;
+}
 	
 state do_DISP_LIGHT()
-{}
+{
+	return DISP_LIGHT;
+}
 	
-state do_SLEEP()
-{}
+void do_SLEEP()
+{
+	//if (timer for one second ticks)
+	ProxyDetect();
+}
 
 state do_DISP_FC()
-{}
+{
+	return DISP_FC;
+}
 	
 state do_SET_HOUR()
-{}
+{
+	return SET_HOUR;
+}
 	
 state do_SET_MIN()
-{}
+{
+	return SET_MIN;
+}
 	
 state do_SET_DAY()
-{}
+{
+	return SET_DAY;
+}
 	
 state do_SET_MONTH()
-{}
+{
+	return SET_MONTH;
+}
 	
 state do_SET_YEAR()
-{}
+{
+	return SET_YEAR;
+}
 	
 state do_DISP_SETUP_MSG()
-{}
+{
+	return DISP_SETUP_MSG;
+}
 	

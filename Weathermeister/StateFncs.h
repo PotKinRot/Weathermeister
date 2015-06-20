@@ -26,11 +26,12 @@ typedef enum {	//Define state machine states
 
 
 
+extern state do_WELCOME();
 extern state do_DISP_TEMP();
 extern state do_DISP_PRESS();
 extern state do_DISP_HUM();
 extern state do_DISP_LIGHT();
-extern state do_SLEEP();
+extern void do_SLEEP();
 extern state do_DISP_FC();
 extern state do_SET_HOUR();
 extern state do_SET_MIN();

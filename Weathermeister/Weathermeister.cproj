@@ -110,6 +110,9 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Setup.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="I2Cfncs.c">
       <SubType>compile</SubType>
     </Compile>
@@ -129,6 +132,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Proximity.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Setup.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="StateFncs.c">

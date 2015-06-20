@@ -17,18 +17,16 @@
 #include "LCD.h"
 #include "Lighttemphum.h"
 #include "StateFncs.h"
-
-
+#include "Setup.h"
 	
 volatile state my_state = WELCOME;	//Declare state variable (volatile, since interrupts may change it)
 
 
 int main(void) {
-	int l;
-	bmp085_init();
-	ds1307_init();
-	Initialize_LCD();
-//	l = Get_Hum();
+	//int l;
+	//	l = Get_Hum();
+	
+	Setup();
 	
 	while(1)
 	{
@@ -55,7 +53,7 @@ int main(void) {
 				break;
 			
 			case SLEEP:
-				my_state = do_SLEEP();             //Sleep mode
+				do_SLEEP();             //Sleep mode, state transition in interrupt below
 				break;
 			
 			case DISP_FC:

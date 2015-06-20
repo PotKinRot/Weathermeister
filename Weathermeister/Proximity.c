@@ -5,8 +5,10 @@
  *  Author: Tilmann
  */ 
 
+#define F_CPU 8000000UL
 #include "util/delay.h"
 #include "avr/io.h"
+#include "avr/interrupt.h"
 
 //////////////////////////////////////////////////////////////////////////
 //Actual code
@@ -24,13 +26,8 @@ void ProxySetup()
 
 void ProxyDetect()	//Needs a timer to work
 {
-	/*
-	if (T1 == 990)		//expects a timer that is incremented every 1ms. TODO: Will this actually work? Reliably?
-	{
-		PINC |= (1 << PINC3):	//activate trigger output,
-		_delay_us(12);			// needs to be at least 10µs
-		PINC &= ~(1 << PINC3);	//deactivate output
-	}
-	*/
+	PINC |= (1 << PINC3);	//activate trigger output,
+	_delay_us(12);			// needs to be at least 10µs
+	PINC &= ~(1 << PINC3);	//deactivate output
 }
 
