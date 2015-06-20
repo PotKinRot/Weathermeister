@@ -165,16 +165,17 @@ void timer3s_tick()
 
 void timer10s_tick()
 {
-	
+		
 }
 
 void timer180s_tick()
 {
-	my_state = SLEEP;
+my_state = SLEEP;
 }
 
 void timer180s_reset()
 {
+
 	if (bu || bd || bs || bf)
 	{
 		timer180s = 0;

@@ -137,7 +137,7 @@ state do_DISP_PRESS()
 		Send_Int(weather.pres);
 		Send_String("bar");	
 		
-		if(my_state != DISP_TEMP)	//if any interrupt has changed the destination state, shut up.
+		if(my_state != DISP_PRESS)	//if any interrupt has changed the destination state, shut up.
 			return my_state;
 		
 		if (bu==0 && bd == 0)
@@ -195,7 +195,7 @@ state do_DISP_HUM()
 		Send_Int(weather.hum);
 		Send_String("%");
 		
-		if(my_state != DISP_TEMP)	//if any interrupt has changed the destination state, shut up.
+		if(my_state != DISP_HUM)	//if any interrupt has changed the destination state, shut up.
 			return my_state;	
 			
 		if (bu==0 && bd == 0)
@@ -251,7 +251,7 @@ state do_DISP_LIGHT()
 		Send_String("Light:");	
 		Send_Int(weather.lux);
 		
-		if(my_state != DISP_TEMP)	//if any interrupt has changed the destination state, shut up.
+		if(my_state != DISP_LIGHT)	//if any interrupt has changed the destination state, shut up.
 			return my_state;		
 		
 		if (bu==0 && bd == 0)
@@ -274,8 +274,14 @@ state do_DISP_LIGHT()
 	
 state do_SLEEP()
 {
+	clear_display();
+	
 	if (bd || bu || bf || bs)
-		return DISP_TEMP;
+		{bd=0;
+		bu=0;
+		bs=0;
+		bf=0;
+		return DISP_TEMP;}
 	else
 		return SLEEP;
 	//ProxyDetect();
