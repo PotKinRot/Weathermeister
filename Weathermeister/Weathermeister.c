@@ -62,7 +62,7 @@ int main(void) {
 				break;
 			
 			case SLEEP:
-				do_SLEEP();             //Sleep mode, state transition in interrupt below
+				my_state = do_SLEEP();             //Sleep mode, state transition in interrupt below
 				break;
 			
 			case DISP_FC:
@@ -106,7 +106,7 @@ int main(void) {
 	return 0;
 }
 
-/*
+
 ISR(INT0_vect)	//needs to be in this file b/c it needs access to my_state global var!
 {
 	if (my_state == SLEEP)		//error prevention - this must only trigger when we are sleeping
@@ -116,7 +116,7 @@ ISR(INT0_vect)	//needs to be in this file b/c it needs access to my_state global
 		my_state == DISP_TEMP;	//change state
 	}
 }
-*/
+
 ISR (TIMER0_OVF_vect)
 {
   /* Interrupt Aktion alle
@@ -154,7 +154,8 @@ ISR (TIMER0_OVF_vect)
 
 void timer1s_tick()
 {
-	
+	if (my_state == SLEEP)
+		ProxyDetect();
 }
 
 void timer3s_tick()
@@ -169,7 +170,7 @@ void timer10s_tick()
 
 void timer180s_tick()
 {
-	
+	my_state = SLEEP;
 }
 
 void timer180s_reset()

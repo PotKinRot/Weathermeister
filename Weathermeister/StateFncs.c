@@ -25,6 +25,8 @@ volatile int bf;
 int cnt = 0;
 volatile weather1 weather;
 
+extern volatile state my_state;
+
 
 state do_WELCOME()
 {
@@ -77,7 +79,9 @@ state do_DISP_TEMP()
 		Send_Double(weather.temp,2,1);
 		Send_String("C");
 		
-
+		if(my_state != DISP_TEMP)	//if any interrupt has changed the destination state, shut up.
+			return my_state;
+			
 		if (bu==0 && bd == 0)
 		{
 			return DISP_TEMP;	
@@ -132,6 +136,10 @@ state do_DISP_PRESS()
 		Send_String("Pressure:");	
 		Send_Int(weather.pres);
 		Send_String("bar");	
+		
+		if(my_state != DISP_TEMP)	//if any interrupt has changed the destination state, shut up.
+			return my_state;
+		
 		if (bu==0 && bd == 0)
 		{
 			return DISP_PRESS;
@@ -185,7 +193,11 @@ state do_DISP_HUM()
 		GotoLCD_Location(1,2);
 		Send_String("Humidity:");	
 		Send_Int(weather.hum);
-		Send_String("%");	
+		Send_String("%");
+		
+		if(my_state != DISP_TEMP)	//if any interrupt has changed the destination state, shut up.
+			return my_state;	
+			
 		if (bu==0 && bd == 0)
 		{
 			return DISP_HUM;
@@ -238,6 +250,10 @@ state do_DISP_LIGHT()
 		GotoLCD_Location(1,2);
 		Send_String("Light:");	
 		Send_Int(weather.lux);
+		
+		if(my_state != DISP_TEMP)	//if any interrupt has changed the destination state, shut up.
+			return my_state;		
+		
 		if (bu==0 && bd == 0)
 		{
 			return DISP_LIGHT;
@@ -256,10 +272,13 @@ state do_DISP_LIGHT()
 		}	
 }
 	
-void do_SLEEP()
+state do_SLEEP()
 {
-	//if (timer for one second ticks)
-	ProxyDetect();
+	if (bd || bu || bf || bs)
+		return DISP_TEMP;
+	else
+		return SLEEP;
+	//ProxyDetect();
 }
 
 state do_DISP_FC()
