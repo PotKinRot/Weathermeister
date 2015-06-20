@@ -9,19 +9,12 @@ int Get_Hum(void)
 {
 	char printbuff[100];
 	int8_t temperature = 0;
-	int8_t humidity = 0;
-	if(dht_gettemperaturehumidity(&temperature, &humidity) != -1) {
-			#if DHT_FLOAT == 0
-			itoa(temperature, printbuff, 10);
-			#elif DHT_FLOAT == 1
-			dtostrf(temperature, 3, 3, printbuff);
-			#endif
-			#if DHT_FLOAT == 0
-			itoa(humidity, printbuff, 10);
-			#elif DHT_FLOAT == 1
-			dtostrf(humidity, 3, 3, printbuff);
-			#endif
-			} 
+	int8_t humidity;
+	dht_gettemperaturehumidity(&temperature, &humidity);
+	dtostrf(temperature, 3, 3, printbuff);
+	dtostrf(humidity, 3, 3, printbuff);
+
+			 
 	
 	
 	return humidity;
