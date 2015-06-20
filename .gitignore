@@ -20,7 +20,7 @@ $RECYCLE.BIN/
 # Atmel Studio solution options
 *.atsuo
 
-# Compiled files
+# Compiled files+debug stuff
 *.hex
 *.o
 *.d
@@ -28,6 +28,7 @@ $RECYCLE.BIN/
 *.elf
 *.lss
 *.map
+Debug
 
 # =========================
 # Operating System Files

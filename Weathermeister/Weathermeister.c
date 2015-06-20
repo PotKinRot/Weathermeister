@@ -15,11 +15,12 @@
 #include <math.h>
 #include "I2Cfncs.h"
 #include "LCD.h"
+#include "dht.h"
+
 
 int main(void) {
 	double l;
 	uint8_t time[6];
-	//init bmp085
 	bmp085_init();
 	ds1307_init();
 	Initialize_LCD();
@@ -30,8 +31,8 @@ int main(void) {
 	
 	while(1)
 	{
-	ds1307_getdate(&time[0], &time[1], &time[2], &time[3], &time[4], &time[5]);
-	GotoLCD_Location(1,1);
+		ds1307_getdate(&time[0], &time[1], &time[2], &time[3], &time[4], &time[5]);
+		GotoLCD_Location(1,1);
 	
 	
 		Send_String("Time:");
@@ -47,14 +48,8 @@ int main(void) {
 		Send_String(" ");
 		Send_Int(time[5]);
 		Send_String(" ");
-l = bmp085_gettemperature();
+		l = dht_gethumidity()
 		Send_Double(l,2,2);
-		
-
-		
-		
-		
-		
 		
 	}
 	
