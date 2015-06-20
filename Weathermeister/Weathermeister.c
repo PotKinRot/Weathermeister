@@ -5,7 +5,7 @@
  *  Author: Tilmann
  */ 
 
-#define F_CPU 16000000UL
+#define F_CPU 8000000UL
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -17,13 +17,8 @@
 #include "LCD.h"
 
 int main(void) {
-	long l;
-	double d;
-	char printbuff[10];
+	double l;
 	uint8_t time[6];
-	DDRA=0xff;
-	PORTA=0x00;
-	
 	//init bmp085
 	bmp085_init();
 	ds1307_init();
@@ -38,6 +33,7 @@ int main(void) {
 	ds1307_getdate(&time[0], &time[1], &time[2], &time[3], &time[4], &time[5]);
 	GotoLCD_Location(1,1);
 	
+	
 		Send_String("Time:");
 		Send_Int(time[0]);
 		Send_String(" ");
@@ -51,14 +47,13 @@ int main(void) {
 		Send_String(" ");
 		Send_Int(time[5]);
 		Send_String(" ");
-
+l = bmp085_gettemperature();
+		Send_Double(l,2,2);
 		
 
 		
 		
 		
-		PORTA=time[5];
-
 		
 		
 	}
