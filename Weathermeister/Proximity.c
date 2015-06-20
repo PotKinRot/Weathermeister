@@ -27,7 +27,7 @@ void ProxySetup()
 void ProxyDetect()	//Needs a timer to work
 {
 	PINC |= (1 << PINC3);	//activate trigger output,
-	_delay_us(12);			// needs to be at least 10µs
+	_delay_us(50);			// needs to be at least 10µs
 	PINC &= ~(1 << PINC3);	//deactivate output
 }
 
