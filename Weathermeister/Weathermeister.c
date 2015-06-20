@@ -21,7 +21,6 @@
 int main(void) {
 	double l;
 	uint8_t time[6];
-	//init bmp085
 	bmp085_init();
 	ds1307_init();
 	Initialize_LCD();
