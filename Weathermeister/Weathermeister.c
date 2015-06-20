@@ -165,12 +165,12 @@ void timer3s_tick()
 
 void timer10s_tick()
 {
-	
+my_state = SLEEP;		//AUF 180 ÄNDERN!!!!!!!!!!!!!!111111111111111einseinself
 }
 
 void timer180s_tick()
 {
-my_state = SLEEP;	
+
 }
 
 void timer180s_reset()
@@ -178,6 +178,6 @@ void timer180s_reset()
 
 	if (bu || bd || bs || bf)
 	{
-		timer180s = 0;
+		timer10s = 0; //AUF 180 ÄNDERN!!!!!!!!!!!!!!111111111111111einseinself
 	}
 }

@@ -20,6 +20,7 @@ void ProxySetup()
 	
 	GICR |= (1 << INT0);	//Enable external interrupt 0 for echo pin
 	MCUCR |= (1 << ISC01) | (1 << ISC00);
+	SREG = (1 << 7);
 	
 	sei();	//enable global interrupts
 }

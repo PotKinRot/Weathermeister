@@ -22,7 +22,7 @@ volatile int bd;
 volatile int bs;
 volatile int bf;
 int cnt = 0;
-volatile weather1 weather;
+volatile weather1 weather; //BEHINDERTE DRECKSKACKESCHEISSE
 volatile int issetup =0;
 
 extern volatile state my_state;
@@ -37,7 +37,7 @@ state do_WELCOME()
 	_delay_ms(3000*2);
 	clear_display();
 	return DISP_TEMP;
-	//Transition: Timer = 3Secs;
+
 	
 }
 
