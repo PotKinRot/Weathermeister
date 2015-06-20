@@ -125,6 +125,12 @@
     <Compile Include="Lighttemphum.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Proximity.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Proximity.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Weathermeister.c">
       <SubType>compile</SubType>
     </Compile>

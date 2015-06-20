@@ -22,23 +22,15 @@ void ProxySetup()
 	sei();	//enable global interrupts
 }
 
-//TODO: Needs to return a state => need state machine!
-void ProxyDetect()
+void ProxyDetect()	//Needs a timer to work
 {
+	/*
 	if (T1 == 990)		//expects a timer that is incremented every 1ms. TODO: Will this actually work? Reliably?
 	{
 		PINC |= (1 << PINC3):	//activate trigger output,
 		_delay_us(12);			// needs to be at least 10µs
 		PINC &= ~(1 << PINC3);	//deactivate output
 	}
-}
-
-ISR(INT0_vect)
-{
-	if (my_state == SLEEP)		//error prevention - this must only trigger when we are sleeping
-	{
-		_delay_us(500);			//wait 500µs - time for the signal to travel ~10cm and back
-		if ( !(PIND & (1<<PIND3)) )	//if signal is gone by now, an object is present
-			my_state == DISP_TEMP;	//change state
+	*/
 }
 
