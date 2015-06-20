@@ -351,7 +351,6 @@ state do_SLEEP()
 		return DISP_TEMP;}
 	else
 		return SLEEP;
-	//ProxyDetect();
 }
 
 state do_DISP_FC()

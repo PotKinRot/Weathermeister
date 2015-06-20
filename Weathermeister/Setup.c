@@ -17,7 +17,7 @@
 void Setup()
 {
 	Setup_Schewi();
-	//ProxySetup();
+	ProxySetup();
 	Setup_Timer();
 	Setup_Buttoninput();
 }

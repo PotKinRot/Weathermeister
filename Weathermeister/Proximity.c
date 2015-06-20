@@ -16,7 +16,7 @@
 void ProxySetup()
 {
 	DDRC |= (1 << DDRC3);	//Trigger output
-	DDRD &= ~(1 << DDRD3);	//Echo input (ext. interrupt)
+	DDRD &= ~(1 << DDRD2);	//Echo input (ext. interrupt)
 	
 	GICR |= (1 << INT0);	//Enable external interrupt 0 for echo pin
 	MCUCR |= (1 << ISC01) | (1 << ISC00);

@@ -7,17 +7,17 @@
 
 #include <util/delay.h>
 
-#define DataBus				PORTD
+#define DataBus				PORTB
 
-#define DataDir_DataBus		DDRD 
+#define DataDir_DataBus		DDRB
 
 
 
-#define LCD_Control			PORTB
-#define DataDir_LCD_Control	DDRB
+#define LCD_Control			PORTD
+#define DataDir_LCD_Control	DDRD
 #define RS					0		// pin numbers
 #define ReadWrite			1
-#define Enable				2
+#define Enable				3
 
 char firstColumnPos[4] = {0, 64, 20, 84};
 
