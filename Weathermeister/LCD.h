@@ -3,16 +3,18 @@
 
 #include <stdlib.h>
 
-#define F_CPU 16000000UL	// change this with respect to microcontroller clock speed.
+#define F_CPU 8000000UL	// change this with respect to microcontroller clock speed.
 
 #include <util/delay.h>
 
-#define DataBus				PORTB
-#define DataDir_DataBus		DDRB
+#define DataBus				PORTD
+
+#define DataDir_DataBus		DDRD 
 
 
-#define LCD_Control			PORTD
-#define DataDir_LCD_Control	DDRD
+
+#define LCD_Control			PORTB
+#define DataDir_LCD_Control	DDRB
 #define RS					0		// pin numbers
 #define ReadWrite			1
 #define Enable				2
