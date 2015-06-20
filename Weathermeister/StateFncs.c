@@ -20,6 +20,11 @@ volatile int bu;
 volatile int bd;
 volatile int bs;
 volatile int bf;
+double temperature;
+volatile int pressure;
+volatile int humidity;
+volatile int light;
+
 int cnt = 0;
 
 
@@ -29,7 +34,7 @@ state do_WELCOME()
 	Send_String("Welcome to the");
 	GotoLCD_Location(1,2);
 	Send_String("Weathermeister");
-	_delay_ms(3000*8);
+	_delay_ms(3000*2);
 	clear_display();
 	return DISP_TEMP;
 	//Transition: Timer = 3Secs;
@@ -39,7 +44,6 @@ state do_WELCOME()
 
 state do_DISP_TEMP()
 {
-		ds1307_getdate(&time[0], &time[1], &time[2], &time[3], &time[4], &time[5]);
 		GotoLCD_Location(1,1);
 		if (time[3]<=9)
 		{
@@ -70,7 +74,9 @@ state do_DISP_TEMP()
 		Send_Int(time[2]);
 		
 		GotoLCD_Location(1,2);
-		Send_String("Temperature:");
+		Send_String("Temp.:");
+		Send_Double(temperature,2,2);
+		Send_String("C");
 		
 
 		if (bu==0 && bd == 0)
@@ -125,7 +131,8 @@ state do_DISP_PRESS()
 		
 		GotoLCD_Location(1,2);
 		Send_String("Pressure:");	
-		
+		Send_Int(pressure);
+		Send_String("bar");	
 		if (bu==0 && bd == 0)
 		{
 			return DISP_PRESS;
@@ -178,7 +185,8 @@ state do_DISP_HUM()
 		
 		GotoLCD_Location(1,2);
 		Send_String("Humidity:");	
-		
+		Send_Int(humidity);
+		Send_String("%");	
 		if (bu==0 && bd == 0)
 		{
 			return DISP_HUM;
@@ -230,7 +238,7 @@ state do_DISP_LIGHT()
 		
 		GotoLCD_Location(1,2);
 		Send_String("Light:");	
-		
+		Send_Int(light);
 		if (bu==0 && bd == 0)
 		{
 			return DISP_LIGHT;
@@ -306,6 +314,16 @@ void Debounce()
 	else {bf=1;}
 		cnt=0;
 	}
+	
+}
+
+void Get_Weather_Data()
+{
+	ds1307_getdate(&time[0], &time[1], &time[2], &time[3], &time[4], &time[5]);
+	temperature = bmp085_gettemperature();
+	pressure = bmp085_getpressure();
+	humidity = Get_Hum();
+	
 }
 
 	

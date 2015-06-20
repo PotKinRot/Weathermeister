@@ -136,4 +136,5 @@ ISR (TIMER0_OVF_vect)
   1/488,28125 s = 32,768 ms  
   */
   	Debounce();
+	Get_Weather_Data();
 }
