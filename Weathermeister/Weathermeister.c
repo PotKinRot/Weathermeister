@@ -15,6 +15,8 @@
 #include <math.h>
 #include "I2Cfncs.h"
 #include "LCD.h"
+#include "dht.h"
+
 
 int main(void) {
 	double l;
@@ -47,7 +49,7 @@ int main(void) {
 		Send_String(" ");
 		Send_Int(time[5]);
 		Send_String(" ");
-		l = bmp085_gettemperature();
+		l = dht_gethumidity()
 		Send_Double(l,2,2);
 		
 	}

@@ -3,7 +3,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
-#include <dht.h>
+#include "dht.h"
 
 int main(void)
 {
