@@ -21,7 +21,11 @@
 	
 volatile state my_state = WELCOME;	//Declare state variable (volatile, since interrupts may change it)
 
-
+extern volatile int bu;
+extern volatile int bd;
+extern volatile int bs;
+extern volatile int bf;
+volatile int timer1s=0, timer3s=0, timer10s=0, timer180s=0;
 
 
 int main(void) {
@@ -32,6 +36,8 @@ int main(void) {
 	while(1)
 	{
 	  	Get_Weather_Data();
+		
+		timer180s_reset();	//reset timeout to sleep timer after user input
 		  
 		switch (my_state)
 		{
@@ -119,5 +125,57 @@ ISR (TIMER0_OVF_vect)
   1/488,28125 s = 32,768 ms  
   */
   	Debounce();
+	  
+  	if (timer1s >= 31)	//1s timer ticks after 31 interrupts
+	{
+		timer1s = 0;
+		timer3s++;
+		timer10s++;
+		timer180s++;
+		timer1s_tick();
+	}
+	if (timer3s >= 3)	//3s timer is depending on 1s timer
+	{
+		timer3s = 0;
+		timer3s_tick();
+	}
+	if (timer10s >= 10)	//10s timer is depending on 1s timer
+	{
+		timer10s = 0;
+		timer10s_tick();
+	}
+	if (timer180s >= 180)	//18s timer is depending on 1s timer
+	{
+		timer180s = 0;
+		timer180s_tick();
+	}
+	timer1s++;
+}
 
+void timer1s_tick()
+{
+	
+}
+
+void timer3s_tick()
+{
+	
+}
+
+void timer10s_tick()
+{
+	
+}
+
+void timer180s_tick()
+{
+	
+}
+
+void timer180s_reset()
+{
+	if (bu || bd || bs || bf)
+	{
+		timer180s = 0;
+	}
 }
