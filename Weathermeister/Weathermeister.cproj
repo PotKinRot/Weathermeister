@@ -110,18 +110,6 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="dht.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="GetHum.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="GetLight.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="GetTemp.c">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="I2Cfncs.c">
       <SubType>compile</SubType>
     </Compile>
@@ -129,6 +117,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="LCD.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Lighttemphum.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Lighttemphum.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Weathermeister.c">

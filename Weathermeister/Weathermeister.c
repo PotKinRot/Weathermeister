@@ -15,15 +15,16 @@
 #include <math.h>
 #include "I2Cfncs.h"
 #include "LCD.h"
-#include "dht.h"
+#include "Lighttemphum.h"
 
 
 int main(void) {
-	double l;
+	int l;
 	uint8_t time[6];
 	bmp085_init();
 	ds1307_init();
 	Initialize_LCD();
+	l = Get_Hum();
 	
 	
 	
@@ -48,8 +49,7 @@ int main(void) {
 		Send_String(" ");
 		Send_Int(time[5]);
 		Send_String(" ");
-		l = dht_gethumidity()
-		Send_Double(l,2,2);
+		Send_Int(l);
 		
 	}
 	
