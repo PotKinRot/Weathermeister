@@ -68,11 +68,11 @@ state do_DISP_TEMP()
 		Send_String("  ");
 		
 		
-		Send_Int(time[0]);
+		Send_Int(time[2]);
 		Send_String(".");
 		Send_Int(time[1]);
 		Send_String(".");
-		Send_Int(time[2]);
+		Send_Int(time[0]);
 		
 		GotoLCD_Location(1,2);
 		Send_String("Temp.:");
@@ -111,10 +111,9 @@ state do_DISP_TEMP()
 			return DISP_FC;
 		}
 		
-		if (bu==0 && bd == 0)
-		{
+
 			return DISP_TEMP;
-		}
+
 	
 		
 		
@@ -147,11 +146,11 @@ state do_DISP_PRESS()
 		Send_String("  ");
 		
 		
-		Send_Int(time[0]);
+		Send_Int(time[2]);
 		Send_String(".");
 		Send_Int(time[1]);
 		Send_String(".");
-		Send_Int(time[2]);
+		Send_Int(time[0]);
 		
 		GotoLCD_Location(1,2);
 		Send_String("Pressure:");	
@@ -168,12 +167,14 @@ state do_DISP_PRESS()
 			bu=0;
 			return DISP_HUM;
 		}
+		
 		if (bd==1)
 		{
 			clear_display();
 			bd=0;
 			return DISP_LIGHT;
-		}		
+		}	
+			
 		if (bs==1)
 		{
 			clear_display();
@@ -187,10 +188,9 @@ state do_DISP_PRESS()
 			bf=0;
 			return DISP_FC;
 		}		
-		if (bu==0 && bd == 0)
-		{
+
 			return DISP_PRESS;
-		}
+	
 
 }
 	
@@ -219,11 +219,11 @@ state do_DISP_HUM()
 		Send_String("  ");
 		
 		
-		Send_Int(time[0]);
+		Send_Int(time[2]);
 		Send_String(".");
 		Send_Int(time[1]);
 		Send_String(".");
-		Send_Int(time[2]);
+		Send_Int(time[0]);
 		
 		GotoLCD_Location(1,2);
 		Send_String("Humidity:");	
@@ -263,10 +263,8 @@ state do_DISP_HUM()
 			return DISP_FC;
 		}		
 		
-		if (bu==0 && bd == 0)
-		{
 			return DISP_HUM;
-		}		
+		
 		
 }
 	
@@ -295,11 +293,11 @@ state do_DISP_LIGHT()
 		Send_String("  ");
 		
 		
-		Send_Int(time[0]);
+		Send_Int(time[2]);
 		Send_String(".");
 		Send_Int(time[1]);
 		Send_String(".");
-		Send_Int(time[2]);
+		Send_Int(time[0]);
 		
 		GotoLCD_Location(1,2);
 		Send_String("Light:");	
@@ -335,15 +333,10 @@ state do_DISP_LIGHT()
 			return DISP_FC;
 		}		
 		
-		if (bs==0 && bf == 0)
-		{
-			return DISP_HUM;
-		}
+
 		
-		if (bu==0 && bd == 0)
-		{
-			return DISP_LIGHT;
-		}		
+
+			return DISP_LIGHT;	
 }
 	
 state do_SLEEP()
