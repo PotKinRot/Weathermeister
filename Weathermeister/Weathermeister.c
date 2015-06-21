@@ -35,7 +35,7 @@ int main(void) {
 	Setup();
 	while(1)
 	{
-	  	Get_Weather_Data();
+	 	Get_Weather_Data();
 		
 		timer180s_reset();	//reset timeout to sleep timer after user input
 		  
@@ -106,7 +106,7 @@ int main(void) {
 	return 0;
 }
 
-
+/*
 ISR(INT0_vect)	//needs to be in this file b/c it needs access to my_state global var!
 {
 	if (my_state == SLEEP)		//error prevention - this must only trigger when we are sleeping
@@ -116,7 +116,7 @@ ISR(INT0_vect)	//needs to be in this file b/c it needs access to my_state global
 		my_state == DISP_TEMP;	//change state
 	}
 }
-
+*/
 ISR (TIMER0_OVF_vect)
 {
   /* Interrupt Aktion alle
@@ -165,12 +165,12 @@ void timer3s_tick()
 
 void timer10s_tick()
 {
-my_state = SLEEP;		//AUF 180 ÄNDERN!!!!!!!!!!!!!!111111111111111einseinself
+
 }
 
 void timer180s_tick()
 {
-
+my_state = SLEEP;		//AUF 180 ÄNDERN!!!!!!!!!!!!!!111111111111111einseinself
 }
 
 void timer180s_reset()
@@ -178,6 +178,6 @@ void timer180s_reset()
 
 	if (bu || bd || bs || bf)
 	{
-		timer10s = 0; //AUF 180 ÄNDERN!!!!!!!!!!!!!!111111111111111einseinself
+		timer180s = 0; //AUF 180 ÄNDERN!!!!!!!!!!!!!!111111111111111einseinself
 	}
 }
