@@ -17,16 +17,16 @@
 void Setup()
 {
 	Setup_Schewi();
-	//ProxySetup();
+	ProxySetup();
 	Setup_Timer();
 	Setup_Buttoninput();
 }
 
 void Setup_Schewi()
 {
-
-	ds1307_init();
+	bmp085_init();
 	Initialize_LCD();
+	ds1307_init();
 }
 
 void Setup_Buttoninput()

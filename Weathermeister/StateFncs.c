@@ -76,7 +76,7 @@ state do_DISP_TEMP()
 		
 		GotoLCD_Location(1,2);
 		Send_String("Temp.:");
-		Send_Int(weather.temp);
+		Send_Double(weather.temp,2,1);
 		Send_String("C");
 		
 		if(my_state != DISP_TEMP)	//if any interrupt has changed the destination state, shut up.
@@ -153,9 +153,9 @@ state do_DISP_PRESS()
 		Send_Int(time[0]);
 		
 		GotoLCD_Location(1,2);
-		Send_String("Pressure:");	
-		Send_Int(weather.pres);
-		//Send_String("bar");	
+		Send_String("Pres:");	
+		Send_Double(weather.pres,2,5);
+		Send_String("bar");	
 		
 		if(my_state != DISP_PRESS)	//if any interrupt has changed the destination state, shut up.
 			return my_state;
@@ -603,8 +603,12 @@ void Get_Weather_Data()
 {
 if (issetup==0)
 	ds1307_getdate(&time[0], &time[1], &time[2], &time[3], &time[4], &time[5]);
-	weather.temp = bmp085_gettemperature();
-	weather.pres = bmp085_getpressure();
+	if (my_state == DISP_TEMP) weather.temp = bmp085_gettemperature();
+	if (my_state == DISP_PRESS) 
+	{
+		weather.pres = bmp085_getpressure();
+		weather.pres = weather.pres/100000;
+	}
 	weather.hum = Get_Hum();
 	
 }

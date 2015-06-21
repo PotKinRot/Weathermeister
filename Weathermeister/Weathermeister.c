@@ -19,7 +19,7 @@
 #include "StateFncs.h"
 #include "Setup.h"
 	
-volatile state my_state = WELCOME;	//Declare state variable (volatile, since interrupts may change it)
+extern volatile state my_state = WELCOME;	//Declare state variable (volatile, since interrupts may change it)
 
 extern volatile int bu;
 extern volatile int bd;
