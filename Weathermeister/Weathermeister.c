@@ -25,6 +25,9 @@ extern volatile int bu;
 extern volatile int bd;
 extern volatile int bs;
 extern volatile int bf;
+volatile double pressureData[5];
+
+
 volatile int timer1s=0, timer3s=0, timer10s=0, timer180s=0;
 
 
@@ -165,7 +168,11 @@ void timer3s_tick()
 
 void timer10s_tick()
 {
-
+ //left shift of pressure data array
+ //for (int i = 1; i < 5; i++)
+ //pressureData[i-1] = pressureData[i];   <<<<<<<<<<<=============== Code causes freeze after 10 seconds
+ //save new data
+ //pressureData[4] = bmp085_getpressure();
 }
 
 void timer180s_tick()

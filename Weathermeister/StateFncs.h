@@ -29,6 +29,8 @@ typedef struct
 } weather1;
 
 
+
+
 extern state do_WELCOME();
 extern state do_DISP_TEMP();
 extern state do_DISP_PRESS();

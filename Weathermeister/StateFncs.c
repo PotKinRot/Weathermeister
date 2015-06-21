@@ -24,6 +24,7 @@ volatile int bf;
 int cnt = 0;
 volatile weather1 weather; //BEHINDERTE DRECKSKACKESCHEISSE
 volatile int issetup =0;
+extern double pressureData[5];
 
 extern volatile state my_state;
 
@@ -355,8 +356,33 @@ state do_SLEEP()
 
 state do_DISP_FC()
 {
-	return DISP_FC;
-}
+	int averagePressure = 0;
+	
+	for (int i=0; i<5; i++)
+	averagePressure += pressureData[i];
+	
+	averagePressure /= 5; //TODO: should all this be floats?ich		
+	
+	if (pressureData[3] > averagePressure && pressureData[4] > averagePressure)
+	{
+		GotoLCD_Location(1,1);
+		Send_String("Forecast: Good");
+		GotoLCD_Location(1,2);
+		Send_String("Weather Expected");
+	}
+	else
+	{
+		GotoLCD_Location(1,1);
+		Send_String("Forecast: Bad");
+		GotoLCD_Location(1,2);
+		Send_String("Weather Expected");
+	}
+	
+	_delay_ms(5000*12);
+	clear_display();
+	return DISP_TEMP;
+}	
+
 	
 state do_SET_HOUR()
 {

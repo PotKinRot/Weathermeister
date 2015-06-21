@@ -18,10 +18,10 @@ References:
 #include <avr/io.h>
 
 //setup port
-#define DHT_DDR DDRA
-#define DHT_PORT PORTA
-#define DHT_PIN PINA
-#define DHT_INPUTPIN PA7
+#define DHT_DDR DDRC
+#define DHT_PORT PORTC
+#define DHT_PIN PINC
+#define DHT_INPUTPIN PC2
 
 //sensor type
 #define DHT_DHT11 1
