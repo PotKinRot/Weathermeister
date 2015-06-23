@@ -252,10 +252,6 @@ state do_DISP_HUM()
 		if(my_state != DISP_HUM)	//if any interrupt has changed the destination state, shut up.
 			return my_state;	
 			
-		if (bu==0 && bd == 0)
-		{
-			return DISP_HUM;
-		}
 		if (bu==1)
 		{
 			clear_display();
@@ -411,7 +407,8 @@ state do_DISP_FC()
 		Send_String("Weather Expected");
 	}
 	
-	_delay_ms(5000*12);
+	_delay_ms(10000);
+	_delay_ms(10000);
 	clear_display();
 	return DISP_TEMP;
 }	
@@ -661,9 +658,11 @@ State from Diagram: S13
 */	
 state do_DISP_SETUP_MSG()
 {
+	GotoLCD_Location(1,1);
 	Send_String("Time&Date Set!");
 	ds1307_setdate(time[0],time[1],time[2],time[3],time[4],0);
 	_delay_ms(10000);
+	clear_display();
 	issetup=0;
 	return DISP_TEMP;
 }
@@ -705,7 +704,7 @@ if (issetup==0)
 		weather.pres = bmp085_getpressure();
 		weather.pres = (weather.pres/100000)+0.16;									//Calibration
 	}
-	weather.hum = -Get_Hum();
+	weather.hum = Get_Hum();
 	
 }
 
