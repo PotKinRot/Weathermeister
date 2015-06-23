@@ -32,3 +32,5 @@ void ProxyDetect()	//Needs a timer to work
 	PINC &= ~(1 << PINC3);	//deactivate output
 }
 
+
+

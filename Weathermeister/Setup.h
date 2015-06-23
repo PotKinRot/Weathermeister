@@ -11,7 +11,6 @@
 
 
 void Setup();
-void Setup_Schewi();
 void Setup_Proxy();
 void Setup_Timer();
 

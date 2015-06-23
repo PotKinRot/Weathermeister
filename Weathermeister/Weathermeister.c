@@ -2,7 +2,7 @@
  * Weathermeister.c
  *
  * Created: 09.06.2015 14:37:49
- *  Author: Tilmann
+ *  Author: Schewi
  */ 
 
 #define F_CPU 8000000UL
@@ -32,35 +32,33 @@ volatile int timer1s=0, timer3s=0, timer10s=0, timer180s=0;
 
 
 int main(void) {
-	//int l;
-	//	l = Get_Hum();
 	
 	Setup();
 	while(1)
 	{
-	 	Get_Weather_Data();
+
 		
 		timer180s_reset();	//reset timeout to sleep timer after user input
 		  
 		switch (my_state)
 		{
-			case WELCOME:                         //welcome msg
+			case WELCOME:                         //welcome Message
 				my_state = do_WELCOME();
 				break;
 			
-			case DISP_TEMP:
+			case DISP_TEMP:						//Displaying Temperature
 				my_state = do_DISP_TEMP();
 				break;
 			
-			case DISP_PRESS:
+			case DISP_PRESS:					//Displaying Pressure
 				my_state = do_DISP_PRESS();                   
 				break;
 			
-			case DISP_HUM:                           
+			case DISP_HUM:						//Displaying Humidity
 				my_state = do_DISP_HUM();
 				break;
 			
-			case DISP_LIGHT:
+			case DISP_LIGHT:					//Displaying Light Intensity
 				my_state = do_DISP_LIGHT();
 				break;
 			
@@ -97,7 +95,7 @@ int main(void) {
 				break;
 			
 			default:
-				my_state = DISP_TEMP;
+				my_state = DISP_TEMP;					//In Case of wrong data => Home Screen
 				break;
 			
 		}
@@ -122,12 +120,13 @@ ISR(INT0_vect)	//needs to be in this file b/c it needs access to my_state global
 */
 ISR (TIMER0_OVF_vect)
 {
-  /* Interrupt Aktion alle
-  (8000000/1024)/256 Hz = 30,51 Hz
-  bzw.
-  1/488,28125 s = 32,768 ms  
+  /* Interrupt:
+		(8000000/1024)/256 Hz = 30,51 Hz
+	
+		1/488,28125 s = 32,768 ms  
   */
   	Debounce();
+	Get_Weather_Data();	//weather data aquisition
 	  
   	if (timer1s >= 31)	//1s timer ticks after 31 interrupts
 	{
@@ -153,34 +152,35 @@ ISR (TIMER0_OVF_vect)
 		timer180s_tick();
 	}
 	timer1s++;
+	
 }
 
-void timer1s_tick()
+void timer1s_tick()			//Interrupt after one Second
 {
 	if (my_state == SLEEP)
 		ProxyDetect();
 }
 
-void timer3s_tick()
+void timer3s_tick()			//Interrupt after three Second
 {
 	
 }
 
-void timer10s_tick()
+void timer10s_tick()		//Interrupt after ten Second
 {
  //left shift of pressure data array
- //for (int i = 1; i < 5; i++)
- //pressureData[i-1] = pressureData[i];   <<<<<<<<<<<=============== Code causes freeze after 10 seconds
+ for (int i = 1; i < 5; i++)
+ pressureData[i-1] = pressureData[i];		 
  //save new data
- //pressureData[4] = bmp085_getpressure();
+ pressureData[4] = bmp085_getpressure();
 }
 
-void timer180s_tick()
+void timer180s_tick()		//Interrupt after 180 Seconds
 {
-my_state = SLEEP;		//AUF 180 ÄNDERN!!!!!!!!!!!!!!111111111111111einseinself
+ my_state = SLEEP;		//AUF 180 ÄNDERN!!!!!!!!!!!!!!111111111111111einseinself
 }
 
-void timer180s_reset()
+void timer180s_reset()		//Reset Sleep Counter
 {
 
 	if (bu || bd || bs || bf)

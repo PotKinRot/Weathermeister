@@ -1,8 +1,5 @@
 /*
  * Setup.c
- *
- * Created: 20.06.2015 16:58:09
- *  Author: Tilmann
  */ 
 
 #include "Proximity.h"
@@ -11,25 +8,23 @@
 #include "I2Cfncs.h"
 
 
+
 #ifndef TIMER0_OVF_vect
 #endif
 
-void Setup()
-{
-	Setup_Schewi();
-	ProxySetup();
-	Setup_Timer();
-	Setup_Buttoninput();
-}
-
-void Setup_Schewi()
+void Setup()					//Main setup Function, all intialisations in here!
 {
 	bmp085_init();
 	Initialize_LCD();
 	ds1307_init();
+	ProxySetup();
+	Setup_Timer();
+	Setup_Buttoninput();
+	LedM_Init();
 }
 
-void Setup_Buttoninput()
+
+void Setup_Buttoninput()		//Defining ports for Buttons on Keypad
 {
 	DDRC  &= ~(1<<PC7);
 	PORTC |= (1<<PC7);
@@ -40,18 +35,17 @@ void Setup_Buttoninput()
 	DDRC  &= ~(1<<PC4);
 	PORTC |= (1<<PC4);
 	
-}
+}		
 
-
-void Setup_Timer()
+void Setup_Timer()				//Enabling Timer0 
 {
 	
-  // Timer 0 konfigurieren
+  // Timer 0 
   TCCR0 = (1<<CS02); // Prescaler 64
   TCCR0 |= (1<<CS00);
-  // Overflow Interrupt erlauben
+  // Overflow Interrupt 
   TIMSK |= (1<<TOIE0);
-  // Global Interrupts aktivieren
+  // Global Interrupts 
   sei();
  
 }
