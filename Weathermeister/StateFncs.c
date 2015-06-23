@@ -373,7 +373,7 @@ state do_SLEEP()
 		bu=0;
 		bs=0;
 		bf=0;
-		return DISP_TEMP;}
+		return WELCOME;}
 	else
 		return SLEEP;
 }
