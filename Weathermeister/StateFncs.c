@@ -24,7 +24,7 @@ volatile int bd;
 volatile int bs;
 volatile int bf;
 int cnt = 0;
-volatile weather1 weather; //BEHINDERTE DRECKSKACKESCHEISSE
+volatile weather1 weather; //TODO
 volatile int issetup =0;
 extern double pressureData[5];
 extern volatile state my_state;
