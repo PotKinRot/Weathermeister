@@ -705,6 +705,8 @@ if (issetup==0)
 		weather.pres = (weather.pres/100000)+0.16;									//Calibration
 	}
 	weather.hum = Get_Hum();
+	weather.lux = Get_Light();
+	
 	
 }
 
