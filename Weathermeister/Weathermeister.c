@@ -21,26 +21,33 @@
 #include "LEDM.h"
 	
 extern volatile state my_state = WELCOME;	//Declare state variable (volatile, since interrupts may change it)
-
+extern volatile int iswelcome;		
 extern volatile int bu;
 extern volatile int bd;
 extern volatile int bs;
 extern volatile int bf;
-extern volatile int togglewelcome;
-volatile double pressureData[5];
-int cnt1;
-
-volatile int timer1s=0, timer3s=0, timer10s=0, timer180s=0;
+extern volatile int issetup;
+extern volatile int isforecast;
+extern volatile int howistheweather;
 
 
-int main(void) {
+volatile double pressureData[5];	//Data array for pressure storage for forecast
+int togglesetup; //Variable to toggle setup Blink
+int timerblink; //timer for blinken LED Matrix
+int cnt1; //counter for statemachine call
 
-	Setup();
+volatile int timer1s=0, timer3s=0, timer5s=0, timer10s=0, timer180s=0;		//Checkvariables for Timer
+
+
+int main(void)								//Main Loop
+{	
+	iswelcome = 1;	//Startup, Welcome state
+	Setup();		//Calling Setup Routine
 	while(1)
 	{
 	cnt1++;			//Counter for state machine call (once a hundert cycles)
 
-	switch (my_state)
+switch (my_state)		//State machine for LED Matrix
 	{
 		case WELCOME:
 		Show_W();
@@ -61,21 +68,25 @@ int main(void) {
 		case DISP_HUM:
 		Show_H();
 		break;
+		
+		case DISP_FC:
+		if (howistheweather==0)
+		Show_SadFace();
+		if (howistheweather==1)
+		Show_Smiley();
+		break;
+		
+		
 	}
 	
+	if (issetup == 1 && togglesetup ==1)		//easier solution than creating the same code for every setup state
+	Light_All();
+
+	
+
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	if (cnt1==500)
+	if (cnt1==100)
 		{
 			
 		
@@ -148,7 +159,7 @@ int main(void) {
 }
 
 
-ISR(INT0_vect)
+ISR(INT0_vect)					//External Interrupt for Proximity Sensor
 {
 	if (my_state == SLEEP)		//error prevention - this must only trigger when we are sleeping
 	{
@@ -156,7 +167,7 @@ ISR(INT0_vect)
 		if ( !(PIND & (1<<PIND3)) )	//if signal is gone by now, an object is present
 		my_state == DISP_TEMP;	//change state
 	}
-}
+}				
 
 ISR (TIMER0_OVF_vect)
 {
@@ -167,11 +178,24 @@ ISR (TIMER0_OVF_vect)
   */
   	Debounce();
 	Get_Weather_Data();	//weather data aquisition
+	
+	
+	if (timerblink >= 15)	//1s timer ticks after 31 interrupts
+	{
+		timerblink = 0;
+		if (togglesetup==0)
+		togglesetup=1;
+		else
+		togglesetup=0;
+	}  
+	  
+	  
 	  
   	if (timer1s >= 31)	//1s timer ticks after 31 interrupts
 	{
 		timer1s = 0;
 		timer3s++;
+		timer5s++;
 		timer10s++;
 		timer180s++;
 		timer1s_tick();
@@ -180,6 +204,11 @@ ISR (TIMER0_OVF_vect)
 	{
 		timer3s = 0;
 		timer3s_tick();
+	}
+	if (timer5s >= 5)	//3s timer is depending on 1s timer
+	{
+		timer5s = 0;
+		timer5s_tick();
 	}
 	if (timer10s >= 10)	//10s timer is depending on 1s timer
 	{
@@ -192,7 +221,7 @@ ISR (TIMER0_OVF_vect)
 		timer180s_tick();
 	}
 	timer1s++;
-	
+	timerblink++;
 }
 
 void timer1s_tick()			//Interrupt after one Second
@@ -201,12 +230,19 @@ void timer1s_tick()			//Interrupt after one Second
 		ProxyDetect();
 }
 
-void timer3s_tick()			//Interrupt after three Second
+void timer3s_tick()			//Interrupt after three Seconds
 {
-	
+if (iswelcome==1)	
+iswelcome=0;
 }
 
-void timer10s_tick()		//Interrupt after ten Second
+void timer5s_tick()			//Interrupt after seven Seconds
+{
+if (isforecast==1)
+isforecast=0;
+}
+
+void timer10s_tick()		//Interrupt after ten Seconds
 {
  //left shift of pressure data array
  for (int i = 1; i < 5; i++)

@@ -5,6 +5,9 @@
 #include <util/delay.h>
 #include "I2Cfncs.h"
 #include "Lighttemphum.h"
+#include <math.h>
+
+#define EULERNUMBER 2.718281828459 //For the Light Curve
 
 int Get_Hum(void)
 {
@@ -159,6 +162,9 @@ int Get_Light()
 {
 	int Light;
 	uint16_t x;							// variable to store the ADC result
+	float reading;
+	float freading;
+	uint16_t fresult;
 	ADCSRA = (1<<ADEN) | (1<<ADPS2);	// Enable ADC hardware i. e. ADEN=1 and
 	// set ADC Pre-scaler to 16 -->
 	// 1Mhz CPU clock/16 = 62.5kHz, i. e. ADPS2=1
@@ -176,9 +182,30 @@ int Get_Light()
 	// 2nd conversion:
 	ADCSRA = ADCSRA | (1<<ADSC);    // start ADC
 	loop_until_bit_is_clear(ADCSRA,ADSC);    // wait for completion of ADC
-	x=ADCW;    // store result in 16bit-variable
+	reading=ADCW;    // store result in 16bit-variable
+	//x=(x*0.0048828125)	;
+	freading = reading;	
+	
+	if(reading>=0 && reading<=155) {  // Darkness
+		fresult = 0.0;
+	}
+	if(reading>155 && reading<=350) {
+		// y = 0,0042273988x2 - 1,0130028488x + 55,4403759239
+		fresult = 0.0042273988 * freading * freading - 1.0130028488 * freading + 55.4403759239;
+	}
+	if(reading>350 && reading<=650) {
+		// y = 11,7717399221e0,0083003710x
+		fresult = 11.7717399221 * pow(EULERNUMBER, (0.0083003710 * freading));
+	}
+	if(reading>650 && reading<=936) {
+		// y = 0,3373539789e0,0134529914x
+		fresult = 0.3373539789 * pow(EULERNUMBER, (0.0134529914 * freading)) + 448.5;
+	}
+	if(reading>980) {                 // Upper limit of measurement
+		fresult = 100000.6;
+	}	
 		// Needs to be calibrated, after which the factor can be introduced here
-	return x;
+	return fresult;
 }
 
 

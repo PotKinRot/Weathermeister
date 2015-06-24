@@ -18,16 +18,24 @@
 
 
 
-uint8_t time[6];
+uint8_t time[6];	//Timearray
 volatile int bu;
 volatile int bd;
 volatile int bs;
-volatile int bf;
-int cnt = 0;
+volatile int bf;  //Checkvariable Button Forcast for debounce
+int cnt = 0; //Counter for what?
 volatile weather1 weather; //TODO
-volatile int issetup =0;
-extern double pressureData[5];
-extern volatile state my_state;
+
+volatile int issetup =0; //Varibale to check if setup is running or not
+volatile int iswelcome;
+volatile int isforecast;
+
+extern double pressureData[5]; //Pressure array for forecast
+extern volatile state my_state; //State machine Variable
+extern volatile int timer3s;	//request to 3 Seconds interrupt for welcome State
+extern volatile int timer5s;	//request to 7 Seconds interrupt for Forcast
+volatile int howistheweather; //bad = 0 good = 1, connects both statemachines
+
 
 
 /* 
@@ -40,10 +48,15 @@ state do_WELCOME()
 	Send_String("Welcome to the");
 	GotoLCD_Location(1,2);
 	Send_String("Weathermeister");
-	_delay_ms(3000*2);
-	clear_display();
-	return DISP_TEMP;
-
+	
+	if (iswelcome==0)
+	{
+		clear_display();
+		return DISP_TEMP;
+	}
+	
+	else
+	return WELCOME;
 	
 }
 
@@ -118,6 +131,8 @@ state do_DISP_TEMP()
 		{
 			clear_display();
 			bf=0;
+			isforecast =1;
+			timer5s = 0;
 			return DISP_FC;
 		}
 		
@@ -200,6 +215,8 @@ state do_DISP_PRESS()
 		{
 			clear_display();
 			bf=0;
+			isforecast =1;
+			timer5s = 0;
 			return DISP_FC;
 		}		
 
@@ -275,6 +292,8 @@ state do_DISP_HUM()
 		{
 			clear_display();
 			bf=0;
+			isforecast =1;
+			timer5s = 0;			
 			return DISP_FC;
 		}		
 		
@@ -342,13 +361,15 @@ state do_DISP_LIGHT()
 		if (bs==1)
 		{
 			clear_display();
-			bs=0;
+			bs=0;	
+			issetup=1;
 			return SET_HOUR;
 		}
 		if (bf==1)
 		{
 			clear_display();
-			issetup=1;
+			isforecast =1;
+			timer5s = 0;
 			bf=0;
 			return DISP_FC;
 		}		
@@ -374,6 +395,8 @@ state do_SLEEP()
 		bu=0;
 		bs=0;
 		bf=0;
+		timer3s = 0;
+		iswelcome =1;
 		return WELCOME;
 	}
 	else
@@ -403,6 +426,7 @@ state do_DISP_FC()
 		Send_String("Forecast: Good");
 		GotoLCD_Location(1,2);
 		Send_String("Weather Expected");
+		howistheweather = 1;
 	}
 	else
 	{
@@ -410,12 +434,17 @@ state do_DISP_FC()
 		Send_String("Forecast: Bad");
 		GotoLCD_Location(1,2);
 		Send_String("Weather Expected");
+		howistheweather = 0;
 	}
 	
-	_delay_ms(10000);
-	_delay_ms(10000);
-	clear_display();
-	return DISP_TEMP;
+	if (isforecast ==0)
+	{
+		clear_display();
+		return DISP_TEMP;
+	}
+	else
+	return DISP_FC;
+
 }	
 
 
