@@ -22,7 +22,7 @@ void ProxySetup()
 	MCUCR |= (1 << ISC01) | (1 << ISC00);
 	SREG = (1 << 7);
 	
-	sei();	//enable global interrupts
+	//sei();	//enable global interrupts //Already done somewhere else
 }
 
 void ProxyDetect()	//Needs a timer to work

@@ -24,7 +24,7 @@ volatile int bd;
 volatile int bs;
 volatile int bf;
 int cnt = 0;
-volatile weather1 weather; //BEHINDERTE DRECKSKACKESCHEISSE
+volatile weather1 weather; //TODO
 volatile int issetup =0;
 extern double pressureData[5];
 extern volatile state my_state;
@@ -361,7 +361,7 @@ state do_DISP_LIGHT()
 	
 	
 /*
-Description: Sleep state, Display off, backlight off, prox activation and button activation
+Description: Sleep state, Display off, backlight off, prox activation check and button activation
 State from Diagram: S06
 */	
 state do_SLEEP()
@@ -369,13 +369,18 @@ state do_SLEEP()
 	clear_display();
 	
 	if (bd || bu || bf || bs)
-		{bd=0;
+	{
+		bd=0;
 		bu=0;
 		bs=0;
 		bf=0;
-		return WELCOME;}
+		return WELCOME;
+	}
 	else
-		return SLEEP;
+		if (my_state != SLEEP)	//if the proxy interrupt has already changed the destination state, keep the change
+			return my_state;
+		else					//TODO: if-branch could probably be replaced by simple "return my_state;"
+			return SLEEP;
 }
 
 
