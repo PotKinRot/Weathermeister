@@ -42,7 +42,7 @@
     <com_atmel_avrdbg_tool_stk500>
       <ToolOptions>
         <InterfaceProperties>
-          <IspClock>66100</IspClock>
+          <IspClock>71450</IspClock>
         </InterfaceProperties>
         <InterfaceName>ISP</InterfaceName>
       </ToolOptions>
@@ -110,6 +110,9 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="LEDM.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="LEDM.h">
       <SubType>compile</SubType>
     </Compile>

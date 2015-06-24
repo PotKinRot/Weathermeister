@@ -143,9 +143,11 @@ int8_t dht_gethumidity(int8_t *humidity) {
  * get temperature and humidity
  */
 #if DHT_FLOAT == 1
+
 int8_t dht_gettemperaturehumidity(float *temperature, float *humidity) {
 #elif DHT_FLOAT == 0
-	int8_t dht_gettemperaturehumidity(int8_t *temperature, int8_t *humidity) {
+	int8_t dht_gettemperaturehumidity(int8_t *temperature, int8_t *humidity) 
+	{
 #endif
 	return dht_getdata(temperature, humidity);
 }

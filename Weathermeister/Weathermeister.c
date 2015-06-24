@@ -18,6 +18,7 @@
 #include "Lighttemphum.h"
 #include "StateFncs.h"
 #include "Setup.h"
+#include "LEDM.h"
 	
 extern volatile state my_state = WELCOME;	//Declare state variable (volatile, since interrupts may change it)
 
@@ -25,18 +26,58 @@ extern volatile int bu;
 extern volatile int bd;
 extern volatile int bs;
 extern volatile int bf;
+extern volatile int togglewelcome;
 volatile double pressureData[5];
-
+int cnt1;
 
 volatile int timer1s=0, timer3s=0, timer10s=0, timer180s=0;
 
 
 int main(void) {
-	
+
 	Setup();
 	while(1)
 	{
+	cnt1++;			//Counter for state machine call (once a hundert cycles)
 
+	switch (my_state)
+	{
+		case WELCOME:
+		Show_W();
+		break;
+		
+		case DISP_TEMP:
+		Show_T();
+		break;
+		
+		case DISP_PRESS:
+		Show_P();
+		break;
+		
+		case DISP_LIGHT:
+		Show_L();
+		break;
+		
+		case DISP_HUM:
+		Show_H();
+		break;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	if (cnt1==500)
+		{
+			
 		
 		timer180s_reset();	//reset timeout to sleep timer after user input
 		  
@@ -99,9 +140,8 @@ int main(void) {
 				break;
 			
 		}
-		
-		
-		
+		cnt1=0;
+		}
 	}
 	
 	return 0;
