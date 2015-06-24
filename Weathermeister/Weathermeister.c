@@ -107,17 +107,17 @@ int main(void) {
 	return 0;
 }
 
-/*
-ISR(INT0_vect)	//needs to be in this file b/c it needs access to my_state global var!
+
+ISR(INT0_vect)
 {
 	if (my_state == SLEEP)		//error prevention - this must only trigger when we are sleeping
 	{
-		//_delay_us(500);			//wait 500µs - time for the signal to travel ~10cm and back
-		//if ( !(PIND & (1<<PIND3)) )	//if signal is gone by now, an object is present
+		_delay_us(500);			//wait 500µs - time for the signal to travel ~9cm and back
+		if ( !(PIND & (1<<PIND3)) )	//if signal is gone by now, an object is present
 		my_state == DISP_TEMP;	//change state
 	}
 }
-*/
+
 ISR (TIMER0_OVF_vect)
 {
   /* Interrupt:
