@@ -263,7 +263,7 @@ state do_DISP_HUM()
 		
 		GotoLCD_Location(1,2);
 		Send_String("Humidity: ");	
-		Send_Double(weather.hum,2,1); //strange problem with sign before sensor?!
+		Send_Double((weather.hum)-17000,2,0); //don't ask me why the value is 17000 + humidity in percent, but works
 		Send_String(" %       ");
 		
 		if(my_state != DISP_HUM)	//if any interrupt has changed the destination state, shut up.
@@ -739,7 +739,7 @@ if (issetup==0)
 		weather.pres = bmp085_getpressure();
 		weather.pres = (weather.pres/100000)+0.16;									//Calibration
 	}
-	weather.hum = Get_Hum();
+	//weather.hum = Get_Hum();
 	weather.lux = Get_Light();
 	
 	

@@ -29,6 +29,7 @@ extern volatile int bf;
 extern volatile int issetup;
 extern volatile int isforecast;
 extern volatile int howistheweather;
+extern weather1 weather;
 
 
 volatile double pressureData[5];	//Data array for pressure storage for forecast
@@ -41,13 +42,18 @@ volatile int timer1s=0, timer3s=0, timer5s=0, timer10s=0, timer180s=0;		//Checkv
 
 int main(void)								//Main Loop
 {	
-	iswelcome = 1;	//Startup, Welcome state
-	Setup();		//Calling Setup Routine
-	while(1)
-	{
-	cnt1++;			//Counter for state machine call (once a hundert cycles)
+	
+	iswelcome = 1;				//Startup, Welcome state
+	weather.hum = Get_Hum();	//get first humidity value. If not done, first showup wrong
+	Setup();					//Calling Setup Routine
 
-switch (my_state)		//State machine for LED Matrix
+while(1)
+	{
+	cnt1++;						//Counter for state machine call (once a hundert cycles)
+
+
+
+switch (my_state)				//State machine for LED Matrix
 	{
 		case WELCOME:
 		Show_W();
@@ -248,12 +254,13 @@ void timer10s_tick()		//Interrupt after ten Seconds
  for (int i = 1; i < 5; i++)
  pressureData[i-1] = pressureData[i];		 
  //save new data
- pressureData[4] = bmp085_getpressure();
+ pressureData[4] = bmp085_getpressure();		// get pressure data every 10 seconds for forecast
 }
 
 void timer180s_tick()		//Interrupt after 180 Seconds
 {
- my_state = SLEEP;		//AUF 180 ÄNDERN!!!!!!!!!!!!!!111111111111111einseinself
+ weather.hum = Get_Hum(); //get humidity information every three minutes	
+ my_state = SLEEP;		
 }
 
 void timer180s_reset()		//Reset Sleep Counter
@@ -261,6 +268,6 @@ void timer180s_reset()		//Reset Sleep Counter
 
 	if (bu || bd || bs || bf)
 	{
-		timer180s = 0; //AUF 180 ÄNDERN!!!!!!!!!!!!!!111111111111111einseinself
+		timer180s = 0; 
 	}
 }

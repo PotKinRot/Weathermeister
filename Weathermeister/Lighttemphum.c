@@ -13,7 +13,7 @@ float Get_Hum(void)
 {
 	char printbuff[100];
 	int8_t temperature = 0;
-	int8_t humidity;
+	float humidity;
 	dht_gettemperaturehumidity(&temperature, &humidity);
 	dtostrf(temperature, 3, 3, printbuff);
 	dtostrf(humidity, 3, 3, printbuff);
@@ -39,29 +39,26 @@ int8_t dht_getdata(int8_t *temperature, int8_t *humidity) {
 	//reset port
 	DHT_DDR |= (1<<DHT_INPUTPIN); //output
 	DHT_PORT |= (1<<DHT_INPUTPIN); //high
-	_delay_ms(100);
+	_delay_ms(100*8);
 
 	//send request
 	DHT_PORT &= ~(1<<DHT_INPUTPIN); //low
-	#if DHT_TYPE == DHT_DHT11
-	_delay_ms(18);
-	#elif DHT_TYPE == DHT_DHT22
-	_delay_us(500);
-	#endif
+	_delay_us(500*8);
+	
 	DHT_PORT |= (1<<DHT_INPUTPIN); //high
 	DHT_DDR &= ~(1<<DHT_INPUTPIN); //input
-	_delay_us(40);
+	_delay_us(40*8);
 
 	//check start condition 1
 	if((DHT_PIN & (1<<DHT_INPUTPIN))) {
 		return -1;
 	}
-	_delay_us(80);
+	_delay_us(80*8);
 	//check start condition 2
 	if(!(DHT_PIN & (1<<DHT_INPUTPIN))) {
 		return -1;
 	}
-	_delay_us(80);
+	_delay_us(80*8);
 
 	//read the data
 	uint16_t timeoutcounter = 0;
@@ -75,7 +72,7 @@ int8_t dht_getdata(int8_t *temperature, int8_t *humidity) {
 					return -1; //timeout
 				}
 			}
-			_delay_us(30);
+			_delay_us(30*8);
 			if(DHT_PIN & (1<<DHT_INPUTPIN)) //if input is high after 30 us, get result
 				result |= (1<<(7-i));
 			timeoutcounter = 0;
@@ -92,15 +89,11 @@ int8_t dht_getdata(int8_t *temperature, int8_t *humidity) {
 	//reset port
 	DHT_DDR |= (1<<DHT_INPUTPIN); //output
 	DHT_PORT |= (1<<DHT_INPUTPIN); //low
-	_delay_ms(100);
+	_delay_ms(100*8);
 
 	//check checksum
 	if ((uint8_t)(bits[0] + bits[1] + bits[2] + bits[3]) == bits[4]) {
 		//return temperature and humidity
-		#if DHT_TYPE == DHT_DHT11
-		*temperature = bits[2];
-		*humidity = bits[0];
-		#elif DHT_TYPE == DHT_DHT22
 		uint16_t rawhumidity = bits[0]<<8 | bits[1];
 		uint16_t rawtemperature = bits[2]<<8 | bits[3];
 		if(rawtemperature & 0x8000) {
@@ -109,7 +102,6 @@ int8_t dht_getdata(int8_t *temperature, int8_t *humidity) {
 			*temperature = (float)(rawtemperature)/10.0;
 		}
 		*humidity = (float)(rawhumidity)/10.0;
-		#endif
 		return 0;
 	}
 

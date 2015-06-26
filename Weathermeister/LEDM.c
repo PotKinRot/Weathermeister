@@ -325,6 +325,8 @@ void Show_P()
 	Row(4);//Row4
 
 }
+
+
 void Show_W()
 {
 	PORTD &= ~(1 << 7);// Enable LED
@@ -431,61 +433,62 @@ void Show_SadFace()
 void Light_All()
 {
 	PORTD &= ~(1 << 7);// Enable LED
+	Row(1);
 	Column(1);
-	Row(2);//Row2
-	Row(3);//Row3
-	Row(4);//Row4
-	Row(5);//Row5
-	Row(6);//Row6
-	Row(7);//Row7
-	
-	
-	PORTD &= ~(1 << 7);// Enable LED
-	Column(2);
-	Row(2);//Row2
-	Row(3);//Row3
-	Row(4);//Row4
-	Row(5);//Row5
-	Row(6);//Row6
-	Row(7);//Row7
-	
-	PORTD &= ~(1 << 7);// Enable LED
-	Column(3);
-	Row(2);//Row2
-	Row(3);//Row3
-	Row(4);//Row4
-	Row(5);//Row5
-	Row(6);//Row6
-	Row(7);//Row7
-	
-	PORTD &= ~(1 << 7);// Enable LED
-	Column(4);
-	Row(2);//Row2
-	Row(3);//Row3
-	Row(4);//Row4
-	Row(5);//Row5
-	Row(6);//Row6
-	Row(7);//Row7
-	
-	PORTD &= ~(1 << 7);// Enable LED
-	Column(5);
-	Row(2);//Row2
-	Row(3);//Row3
-	Row(4);//Row4
-	Row(5);//Row5
-	Row(6);//Row6
-	Row(7);//Row7
-	
-	
-	PORTD &= ~(1 << 7);// Enable LED
-	Column(6);
-	Row(2);//Row2
-	Row(3);//Row3
-	Row(4);//Row4
-	Row(5);//Row5
-	Row(6);//Row6
-	Row(7);//Row7
-	
+	    Row(2);//Row2
+	    Row(3);//Row3
+	    Row(4);//Row4
+	    Row(5);//Row5
+	    Row(6);//Row6
+	    Row(7);//Row7
+	    
+	    
+	    PORTD &= ~(1 << 7);// Enable LED
+	    Column(2);
+	    Row(2);//Row2
+	    Row(3);//Row3
+	    Row(4);//Row4
+	    Row(5);//Row5
+	    Row(6);//Row6
+	    Row(7);//Row7
+	    
+	    PORTD &= ~(1 << 7);// Enable LED
+	    Column(3);
+	    Row(2);//Row2
+	    Row(3);//Row3
+	    Row(4);//Row4
+	    Row(5);//Row5
+	    Row(6);//Row6
+	    Row(7);//Row7
+	    
+	    PORTD &= ~(1 << 7);// Enable LED
+	    Column(4);
+	    Row(2);//Row2
+	    Row(3);//Row3
+	    Row(4);//Row4
+	    Row(5);//Row5
+	    Row(6);//Row6
+	    Row(7);//Row7
+	    
+	    PORTD &= ~(1 << 7);// Enable LED
+	    Column(5);
+	    Row(2);//Row2
+	    Row(3);//Row3
+	    Row(4);//Row4
+	    Row(5);//Row5
+	    Row(6);//Row6
+	    Row(7);//Row7
+	    
+	    
+	    PORTD &= ~(1 << 7);// Enable LED
+	    Column(6);
+	    Row(2);//Row2
+	    Row(3);//Row3
+	    Row(4);//Row4
+	    Row(5);//Row5
+	    Row(6);//Row6
+	    Row(7);//Row7
+
 	
 	
 }
@@ -496,3 +499,4 @@ void LedM_Init()
 	DDRD |= ((1<<4) | (1<<5) | (1<<6) | (1<<7)); // This is ok, Demultiplexer inputs
 	PORTD|= (1<<7);// All LEDs are OFF
 }
+
