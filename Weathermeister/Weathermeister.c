@@ -178,7 +178,7 @@ ISR (TIMER0_OVF_vect)
   */
   	Debounce();
 	Get_Weather_Data();	//weather data aquisition
-	
+	//clear_display(); //reset display in case of not used numbers on display
 	
 	if (timerblink >= 15)	//1s timer ticks after 31 interrupts
 	{

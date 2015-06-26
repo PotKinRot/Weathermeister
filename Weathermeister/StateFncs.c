@@ -263,8 +263,8 @@ state do_DISP_HUM()
 		
 		GotoLCD_Location(1,2);
 		Send_String("Humidity: ");	
-		Send_Int(weather.hum);
-		Send_String("%");
+		Send_Double(weather.hum,2,1); //strange problem with sign before sensor?!
+		Send_String(" %       ");
 		
 		if(my_state != DISP_HUM)	//if any interrupt has changed the destination state, shut up.
 			return my_state;	
@@ -341,6 +341,7 @@ state do_DISP_LIGHT()
 		GotoLCD_Location(1,2);
 		Send_String("Light:");	
 		Send_Int(weather.lux);
+		Send_String(" lux      ");	
 		
 		if(my_state != DISP_LIGHT)	//if any interrupt has changed the destination state, shut up.
 			return my_state;		

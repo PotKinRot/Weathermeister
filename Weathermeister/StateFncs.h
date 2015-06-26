@@ -25,7 +25,7 @@ typedef enum {	//Define state machine states
 } state;
 
 typedef struct  
-{double temp; double pres;int hum;int lux;
+{double temp; double pres;float hum;int lux;
 } weather1;
 
 

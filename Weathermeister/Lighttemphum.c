@@ -9,14 +9,14 @@
 
 #define EULERNUMBER 2.718281828459 //For the Light Curve
 
-int Get_Hum(void)
+float Get_Hum(void)
 {
 	char printbuff[100];
 	int8_t temperature = 0;
 	int8_t humidity;
 	dht_gettemperaturehumidity(&temperature, &humidity);
-	dtostrf(temperature, 3, 3, printbuff);
-	dtostrf(humidity, 3, 3, printbuff);
+	//dtostrf(temperature, 3, 3, printbuff);
+	//dtostrf(humidity, 3, 3, printbuff);
 
 			 
 	
@@ -160,11 +160,11 @@ int8_t dht_gettemperaturehumidity(float *temperature, float *humidity) {
 
 int Get_Light()
 {
-	int Light;
+	long Light;
 	uint16_t x;							// variable to store the ADC result
 	float reading;
 	float freading;
-	uint16_t fresult;
+	float fresult;
 	ADCSRA = (1<<ADEN) | (1<<ADPS2);	// Enable ADC hardware i. e. ADEN=1 and
 	// set ADC Pre-scaler to 16 -->
 	// 1Mhz CPU clock/16 = 62.5kHz, i. e. ADPS2=1
@@ -183,7 +183,8 @@ int Get_Light()
 	ADCSRA = ADCSRA | (1<<ADSC);    // start ADC
 	loop_until_bit_is_clear(ADCSRA,ADSC);    // wait for completion of ADC
 	reading=ADCW;    // store result in 16bit-variable
-	//x=(x*0.0048828125)	;
+	//x=(x*0.0048828125)	
+	reading = 1023-reading;
 	freading = reading;	
 	
 	if(reading>=0 && reading<=155) {  // Darkness
