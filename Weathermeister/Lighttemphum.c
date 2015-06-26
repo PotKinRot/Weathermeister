@@ -15,8 +15,8 @@ float Get_Hum(void)
 	int8_t temperature = 0;
 	int8_t humidity;
 	dht_gettemperaturehumidity(&temperature, &humidity);
-	//dtostrf(temperature, 3, 3, printbuff);
-	//dtostrf(humidity, 3, 3, printbuff);
+	dtostrf(temperature, 3, 3, printbuff);
+	dtostrf(humidity, 3, 3, printbuff);
 
 			 
 	
